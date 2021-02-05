@@ -1,5 +1,6 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+let webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -42,6 +43,10 @@ module.exports = {
     plugins: [
        new HTMLWebpackPlugin({
            template: path.resolve(__dirname, 'src/index.html'),
-       })
+       }),
+       new webpack.DefinePlugin({
+        'typeof CANVAS_RENDERER': JSON.stringify(true),
+        'typeof WEBGL_RENDERER': JSON.stringify(true)
+       }),
     ]
 };

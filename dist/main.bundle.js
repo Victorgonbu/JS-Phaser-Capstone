@@ -10,6 +10,6 @@
 /*!*********************!*\
   !*** ./src/main.js ***!
   \*********************/
-eval("console.log('Main script');\nvar helloSample = document.querySelector('.example');\nhelloSample.innerHTML = 'Hello my panas ';\n\n//# sourceURL=webpack://webpack-setup/./src/main.js?");
+eval("console.log('Main script');\nvar helloSample = document.querySelector('.example');\nhelloSample.innerHTML = 'Hello my panas';\n\n//# sourceURL=webpack://webpack-setup/./src/main.js?");
 /******/ })()
 ;

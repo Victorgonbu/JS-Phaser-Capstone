@@ -22,5 +22,8 @@
     "webpack": "^5.20.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "phaser": "^3.52.0"
   }
 }
