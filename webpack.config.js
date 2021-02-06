@@ -4,7 +4,7 @@ let webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: './src/main.js',
+        main: './src/Main.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -14,6 +14,10 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: [ /\.vert$/, /\.frag$/ ],
+                use: 'raw-loader'
+            },
             {
                 test: /\.js$/,
                 include: path.resolve(__dirname, 'src/'),
