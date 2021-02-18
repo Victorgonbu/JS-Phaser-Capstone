@@ -23,7 +23,7 @@ export default class GameScene extends Phaser.Scene {
       this.ground.setOrigin(0, 0);
       this.ground.setScrollFactor(0);
 
-      let coin = this.physics.add.sprite(500, 550, 'coin');
+      let coin = this.physics.add.sprite(500, 500, 'coin');
 
       coin.setImmovable(true);
       coin.anims.play('rotate');
@@ -36,16 +36,27 @@ export default class GameScene extends Phaser.Scene {
 
       // add player
 
-      this.player = this.add.sprite(this.sys.game.config.width * 1.5, this.sys.game.config.height/2,'player');
-      this.player.setScale(1.5);
+      this.player = this.add.sprite(this.sys.game.config.width - 700, 518,'idle_gun_0');
+      this.player.setScale(0.2);
       this.anims.create({
-        key: 'fly', 
-        frames: this.anims.generateFrameNumbers('player'),
+        key: 'idle-gun', 
+        frames: [
+          { key: 'idle_gun_0' },
+          { key: 'idle_gun_1' },
+          { key: 'idle_gun_2' },
+          { key: 'idle_gun_3' },
+          { key: 'idle_gun_4' },
+          { key: 'idle_gun_5' },
+          { key: 'idle_gun_6' },
+          { key: 'idle_gun_7' },
+          { key: 'idle_gun_8' },
+          { key: 'idle_gun_9' }
+        ],
         frameRate: 20,
         repeat: -1
       });
 
-      this.player.play('fly');
+      this.player.play('idle-gun');
 
       // create cursors
 
@@ -64,11 +75,11 @@ export default class GameScene extends Phaser.Scene {
     
     if(this.cursors.left.isDown && this.player.x > 0) {
       this.player.x -= 3;
-      this.player.scaleX = 1;
+      this.player.scaleX = -0.2;
 
     }else if(this.cursors.right.isDown && this.player.x < this.sys.game.config.width * 3) {
       this.player.x += 3;
-      this.player.scaleX = -1;
+      this.player.scaleX = 0.2;
     }
 
     // texture scroll
