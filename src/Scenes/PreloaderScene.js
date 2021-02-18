@@ -85,14 +85,39 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('phaserLogo', 'assets/logo.png');
     this.load.image('box', 'assets/ui/grey_box.png');
     this.load.image('checkedBox', 'assets/ui/blue_boxCheckmark.png');
-    this.load.image('greenButton', 'assets/ui/greenButton.png');
-    this.load.image('platform', 'assets/platform.png');
-    this.load.spritesheet('player', 'assets/player.png', {
-      frameWidth: 24,
-      frameHeight: 48
+    this.load.image('bg_1', 'assets/bg-1.png');
+    this.load.image('bg_2', 'assets/bg-2.png');
+    this.load.image('ground', 'assets/ground.png');
+    this.load.spritesheet('coin', 'assets/coin.png', {
+      frameWidth: 20,
+      frameHeight: 20
+    });
+    this.load.spritesheet('player', 'assets/bee.png', {
+      frameWidth: 37,
+      frameHeight: 39
     });
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
 
+  }
+
+  create() {
+     //player animation
+  
+     // coin animation
+     this.anims.create({
+      key: 'rotate',
+      frames: this.anims.generateFrameNumbers('coin', {
+        start: 0,
+        end: 5
+      }),
+      frameRate: 15,
+      yoyo: true,
+      repeat: -1
+    });
+
+    // fire animation
+
+  
   }
 
   ready () {
