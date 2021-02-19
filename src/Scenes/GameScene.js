@@ -43,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
       coin.setDepth(2);
      
 
-      this.ground2.x = this.sys.game.config.width + 30;
+      this.ground2.x = this.sys.game.config.width + 190;
       this.ground2.y = 528;
 
       this.ground.y = 528;
@@ -61,6 +61,7 @@ export default class GameScene extends Phaser.Scene {
       // create cursors
 
       this.cursors = this.input.keyboard.createCursorKeys();
+      this.shotKeyObject = this.input.keyboard.addKey('SPACE');
 
       this.myCam = this.cameras.main;
       this.myCam.setBounds(0, 0, this.sys.game.config.width * 3, this.sys.game.config.height);
@@ -68,11 +69,13 @@ export default class GameScene extends Phaser.Scene {
       this.myCam.startFollow(this.player);
 
       
+      
+      
   }
 
   update() {
     // player movement
-    
+ 
     if(this.cursors.left.isDown && this.player.x > 0) {
   
       this.player.setVelocityX(-160);
@@ -84,20 +87,23 @@ export default class GameScene extends Phaser.Scene {
       this.player.setVelocityX(160);
       this.player.anims.play('run-gun', true);
       this.player.scaleX = 0.2;
-    }else if (this.cursors.up.isDown){
-      this.player.setVelocityY(-330);
-    }
-    else {
-      this.player.setVelocityX(0);
+    }else if(!this.shotKeyObject.isDown){
       this.player.anims.play('idle-gun', true);
+      this.player.setVelocityX(0);
     }
-    console.log(this.ground.x);
-    if(this.ground.x < 0){
-      this.ground.x += this.ground.x * -1;
+
+    if (this.cursors.up.isDown){
+      this.player.anims.stop();
+      this.player.setVelocityY(-160);
+    }
+    
+    if(this.shotKeyObject.isDown) {
+      this.player.setVelocityX(0);
+      this.player.anims.play('shot-gun', true);
     }
 
     // texture scroll
-    console.log(this.myCam.x);
+    
     this.bg_1.tilePositionX = this.myCam.scrollX * .3;
     this.bg_2.tilePositionX = this.myCam.scrollX * .6;
     

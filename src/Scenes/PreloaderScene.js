@@ -77,8 +77,6 @@ export default class PreloaderScene extends Phaser.Scene {
       this.ready();
     }.bind(this));
 
-    this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
-
     // load assets needed in our game
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
     this.load.image('blueButton2', 'assets/ui/blue_button03.png');
@@ -117,6 +115,19 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('run_gun_7', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_007.png');
     this.load.image('run_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_008.png');
     this.load.image('run_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_009.png');
+
+    // shot
+    this.load.image('shot_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_000.png');
+    this.load.image('shot_gun_1', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_001.png');
+    this.load.image('shot_gun_2', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_002.png');
+    this.load.image('shot_gun_3', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_003.png');
+    this.load.image('shot_gun_4', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_004.png');
+    this.load.image('shot_gun_5', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_005.png');
+    this.load.image('shot_gun_6', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_006.png');
+    this.load.image('shot_gun_7', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_007.png');
+    this.load.image('shot_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_008.png');
+    this.load.image('shot_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_009.png');
+
 
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
 
@@ -161,6 +172,25 @@ export default class PreloaderScene extends Phaser.Scene {
       repeat: -1
     });
 
+    this.anims.create({
+      key: 'shot-gun',
+      frames: [
+        { key: 'shot_gun_0' },
+        { key: 'shot_gun_1' },
+        { key: 'shot_gun_2' },
+        { key: 'shot_gun_3' },
+        { key: 'shot_gun_4' },
+        { key: 'shot_gun_5' },
+        { key: 'shot_gun_6' },
+        { key: 'shot_gun_7' },
+        { key: 'shot_gun_8' },
+        { key: 'shot_gun_9' },
+
+      ],
+      frameRate: 40,
+      repeat: -1
+    });
+
      // coin animation
      this.anims.create({
       key: 'rotate',
@@ -180,7 +210,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
   ready () {
     this.readyCount++;
-    if (this.readyCount === 2) {
+    if (this.readyCount === 1) {
       this.scene.start('Title');
     }
   }
