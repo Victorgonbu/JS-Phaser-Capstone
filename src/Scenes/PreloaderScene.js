@@ -93,7 +93,7 @@ export default class PreloaderScene extends Phaser.Scene {
       frameHeight: 20
     });
     // player gun mode
-
+    // idle
     this.load.image('idle_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_000.png');
     this.load.image('idle_gun_1', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_001.png');
     this.load.image('idle_gun_2', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_002.png');
@@ -104,13 +104,63 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('idle_gun_7', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_007.png');
     this.load.image('idle_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_008.png');
     this.load.image('idle_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_009.png');
+
+    // run
+
+    this.load.image('run_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_000.png');
+    this.load.image('run_gun_1', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_001.png');
+    this.load.image('run_gun_2', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_002.png');
+    this.load.image('run_gun_3', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_003.png');
+    this.load.image('run_gun_4', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_004.png');
+    this.load.image('run_gun_5', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_005.png');
+    this.load.image('run_gun_6', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_006.png');
+    this.load.image('run_gun_7', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_007.png');
+    this.load.image('run_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_008.png');
+    this.load.image('run_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/02-Run/E_E_Gun__Run_000_009.png');
+
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
 
   }
 
   create() {
      //player animation
-  
+     // gun mode
+     this.anims.create({
+      key: 'idle-gun', 
+      frames: [
+        { key: 'idle_gun_0' },
+        { key: 'idle_gun_1' },
+        { key: 'idle_gun_2' },
+        { key: 'idle_gun_3' },
+        { key: 'idle_gun_4' },
+        { key: 'idle_gun_5' },
+        { key: 'idle_gun_6' },
+        { key: 'idle_gun_7' },
+        { key: 'idle_gun_8' },
+        { key: 'idle_gun_9' }
+      ],
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'run-gun',
+      frames: [
+        { key: 'run_gun_0'},
+        { key: 'run_gun_1'},
+        { key: 'run_gun_2'},
+        { key: 'run_gun_3'},
+        { key: 'run_gun_4'},
+        { key: 'run_gun_5'},
+        { key: 'run_gun_6'},
+        { key: 'run_gun_7'},
+        { key: 'run_gun_8'},
+        { key: 'run_gun_9'},
+      ],
+      frameRate: 20, 
+      repeat: -1
+    });
+
      // coin animation
      this.anims.create({
       key: 'rotate',

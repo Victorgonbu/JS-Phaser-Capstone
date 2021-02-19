@@ -7,6 +7,10 @@ export default {
   height: 600,
   backgroundColor: 0x87CEEB,
   physics: {
-      default: "arcade"
+      default: "arcade",
+      arcade: {
+        gravity: { y: 300 },
+        debug: false
+      }
   }
 };

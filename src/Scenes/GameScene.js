@@ -19,9 +19,22 @@ export default class GameScene extends Phaser.Scene {
       this.bg_2.setScrollFactor(0);
 
       this.ground = this.add.tileSprite(0, 0, this.sys.game.config.width, 48, 'ground');
-      this.ground.setScale(1.5);
+      this.physics.add.existing(this.ground, false);
+      this.ground.body.allowGravity = false;
+      this.ground.body.setImmovable(true);
+     
+      this.ground.setScale(1);
       this.ground.setOrigin(0, 0);
-      this.ground.setScrollFactor(0);
+
+      this.ground2 = this.add.tileSprite(0, 0, this.sys.game.config.width, 48, 'ground');
+      this.physics.add.existing(this.ground2, false);
+      this.ground2.body.allowGravity = false;
+      this.ground2.body.setImmovable(true);
+     
+      this.ground2.setScale(1);
+      this.ground2.setOrigin(0, 0);
+    
+      
 
       let coin = this.physics.add.sprite(500, 500, 'coin');
 
@@ -30,34 +43,21 @@ export default class GameScene extends Phaser.Scene {
       coin.setDepth(2);
      
 
-      
+      this.ground2.x = this.sys.game.config.width + 30;
+      this.ground2.y = 528;
 
       this.ground.y = 528;
 
       // add player
 
-      this.player = this.add.sprite(this.sys.game.config.width - 700, 518,'idle_gun_0');
+      this.player = this.physics.add.sprite(this.sys.game.config.width - 100, 400,'idle_gun_0');
+    
       this.player.setScale(0.2);
-      this.anims.create({
-        key: 'idle-gun', 
-        frames: [
-          { key: 'idle_gun_0' },
-          { key: 'idle_gun_1' },
-          { key: 'idle_gun_2' },
-          { key: 'idle_gun_3' },
-          { key: 'idle_gun_4' },
-          { key: 'idle_gun_5' },
-          { key: 'idle_gun_6' },
-          { key: 'idle_gun_7' },
-          { key: 'idle_gun_8' },
-          { key: 'idle_gun_9' }
-        ],
-        frameRate: 20,
-        repeat: -1
-      });
+     
 
-      this.player.play('idle-gun');
-
+      this.physics.add.collider(this.player, this.ground);
+      this.physics.add.collider(this.player, this.ground2);
+      
       // create cursors
 
       this.cursors = this.input.keyboard.createCursorKeys();
@@ -74,18 +74,33 @@ export default class GameScene extends Phaser.Scene {
     // player movement
     
     if(this.cursors.left.isDown && this.player.x > 0) {
-      this.player.x -= 3;
+  
+      this.player.setVelocityX(-160);
+      this.player.anims.play('run-gun', true);
       this.player.scaleX = -0.2;
 
     }else if(this.cursors.right.isDown && this.player.x < this.sys.game.config.width * 3) {
-      this.player.x += 3;
+      
+      this.player.setVelocityX(160);
+      this.player.anims.play('run-gun', true);
       this.player.scaleX = 0.2;
+    }else if (this.cursors.up.isDown){
+      this.player.setVelocityY(-330);
+    }
+    else {
+      this.player.setVelocityX(0);
+      this.player.anims.play('idle-gun', true);
+    }
+    console.log(this.ground.x);
+    if(this.ground.x < 0){
+      this.ground.x += this.ground.x * -1;
     }
 
     // texture scroll
-
+    console.log(this.myCam.x);
     this.bg_1.tilePositionX = this.myCam.scrollX * .3;
     this.bg_2.tilePositionX = this.myCam.scrollX * .6;
-    this.ground.tilePositionX = this.myCam.scrollX;
+    
+  
   }
 };
