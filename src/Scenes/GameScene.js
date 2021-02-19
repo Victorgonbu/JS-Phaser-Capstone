@@ -1,8 +1,10 @@
 import 'phaser';
+import BulletGroup from '../Objects/bulletGroup';
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
+    this.bulletGroup;
   }
 
   create () {
@@ -53,15 +55,23 @@ export default class GameScene extends Phaser.Scene {
       this.player = this.physics.add.sprite(this.sys.game.config.width - 100, 400,'idle_gun_0');
     
       this.player.setScale(0.2);
+      this.isWaking = false;
+      this.facing = 'right';
+      // create cursors
+
+       this.cursors = this.input.keyboard.createCursorKeys();
+       this.shotKeyObject = this.input.keyboard.addKey('SPACE');
+
+      // bullets
+
+      this.bulletGroup = new BulletGroup(this);
+      this.addShotEvent();
      
 
       this.physics.add.collider(this.player, this.ground);
       this.physics.add.collider(this.player, this.ground2);
       
-      // create cursors
-
-      this.cursors = this.input.keyboard.createCursorKeys();
-      this.shotKeyObject = this.input.keyboard.addKey('SPACE');
+     
 
       this.myCam = this.cameras.main;
       this.myCam.setBounds(0, 0, this.sys.game.config.width * 3, this.sys.game.config.height);
@@ -73,34 +83,55 @@ export default class GameScene extends Phaser.Scene {
       
   }
 
+  addShotEvent() {
+    this.input.keyboard.on('keydown-SPACE', function() {
+          this.shootBullet();
+    }, this);
+  }
+
+  shootBullet() {
+    if(!this.isWaking){
+      if(this.facing === 'right'){
+        this.bulletGroup.fireBullet(this.player.x + 46, this.player.y + 10, 'right');
+      }else {
+        this.bulletGroup.fireBullet(this.player.x - 46, this.player.y + 10, 'left');
+      }
+      
+    }
+  }
+
   update() {
     // player movement
  
     if(this.cursors.left.isDown && this.player.x > 0) {
-  
+      this.isWaking = true;
+      this.facing = 'left';
       this.player.setVelocityX(-160);
       this.player.anims.play('run-gun', true);
       this.player.scaleX = -0.2;
 
     }else if(this.cursors.right.isDown && this.player.x < this.sys.game.config.width * 3) {
-      
+      this.isWaking = true;
+      this.facing = 'right';
       this.player.setVelocityX(160);
       this.player.anims.play('run-gun', true);
       this.player.scaleX = 0.2;
     }else if(!this.shotKeyObject.isDown){
+      this.isWaking = false;
       this.player.anims.play('idle-gun', true);
       this.player.setVelocityX(0);
     }
 
     if (this.cursors.up.isDown){
-      this.player.anims.stop();
+      this.player.anims.play('jump-gun');
       this.player.setVelocityY(-160);
     }
-    
-    if(this.shotKeyObject.isDown) {
+
+    this.shotKeyObject.on('down', function() {
       this.player.setVelocityX(0);
-      this.player.anims.play('shot-gun', true);
-    }
+      this.player.anims.play('shot-gun', false);
+    }, this);
+    
 
     // texture scroll
     

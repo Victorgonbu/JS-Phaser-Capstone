@@ -128,6 +128,27 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('shot_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_008.png');
     this.load.image('shot_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/03-Shot/E_E_Gun__Attack_009.png');
 
+    // jump´
+    this.load.image('jump_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/05-Jump/E_E_Gun__Jump_000.png');
+  
+    // hurt 
+    this.load.image('hurt_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_000.png');
+    this.load.image('hurt_gun_1', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_001.png');
+    this.load.image('hurt_gun_2', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_002.png');
+    this.load.image('hurt_gun_3', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_003.png');
+    this.load.image('hurt_gun_4', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_004.png');
+    this.load.image('hurt_gun_5', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_005.png');
+    this.load.image('hurt_gun_6', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_006.png');
+    this.load.image('hurt_gun_7', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_007.png');
+    this.load.image('hurt_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_008.png');
+    this.load.image('hurt_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_009.png');
+
+    // other
+
+    // bullet texture
+    this.load.image('bullet', 'assets/Soldier-Guy-PNG/_Weapon/Bullet.png');
+    
+
 
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
 
@@ -188,8 +209,38 @@ export default class PreloaderScene extends Phaser.Scene {
 
       ],
       frameRate: 40,
-      repeat: -1
+      repeat: 0
     });
+    
+
+    this.anims.create({
+      key: 'jump-gun',
+      frames: [
+        { key: 'jump_gun_0' }
+      ],
+      frameRate: 1,
+      repeat: 1
+
+    });
+
+    this.anims.create({
+      key: 'hurt-gun',
+      frames: [
+        { key: 'hurt_gun_0' },
+        { key: 'hurt_gun_1' },
+        { key: 'hurt_gun_2' },
+        { key: 'hurt_gun_3' },
+        { key: 'hurt_gun_4' },
+        { key: 'hurt_gun_5' },
+        { key: 'hurt_gun_6' },
+        { key: 'hurt_gun_7' },
+        { key: 'hurt_gun_8' },
+        { key: 'hurt_gun_9' },
+      ],
+      frameRate: 40,
+      repeat: 1,
+    });
+  
 
      // coin animation
      this.anims.create({
