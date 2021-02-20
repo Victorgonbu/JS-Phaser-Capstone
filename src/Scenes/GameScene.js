@@ -8,47 +8,87 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create () {
+  
+      // background
+
       this.bg_1 = this.add.tileSprite(0, 0, this.sys.game.config.width , this.sys.game.config.height, 'bg_1');
-      this.bg_1.scaleX = 1.5;
-      this.bg_1.scaleY = 2.3;
       this.bg_1.setOrigin(0, 0);
       this.bg_1.setScrollFactor(0);
 
-      this.bg_2 = this.add.tileSprite(0, 0, this.sys.game.config.width, this.sys.game.config.height, 'bg_2');
-      this.bg_2.scaleX = 1.5;
-      this.bg_2.scaleY = 2.3;
+      this.bg_2 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_2');
       this.bg_2.setOrigin(0, 0);
       this.bg_2.setScrollFactor(0);
 
-      this.ground = this.add.tileSprite(0, 0, this.sys.game.config.width, 48, 'ground');
-      this.physics.add.existing(this.ground, false);
-      this.ground.body.allowGravity = false;
-      this.ground.body.setImmovable(true);
-     
-      this.ground.setScale(1);
-      this.ground.setOrigin(0, 0);
+      this.bg_2.y = -200;
 
-      this.ground2 = this.add.tileSprite(0, 0, this.sys.game.config.width, 48, 'ground');
-      this.physics.add.existing(this.ground2, false);
-      this.ground2.body.allowGravity = false;
-      this.ground2.body.setImmovable(true);
-     
-      this.ground2.setScale(1);
-      this.ground2.setOrigin(0, 0);
+     this.bg_3 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_3');
+     this.bg_3.setOrigin(0, 0);
+     this.bg_3.setScrollFactor(0);
+
+     this.bg_3.y = -200;
+
+     this.bg_4 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_4');
+     this.bg_4.setOrigin(0, 0);
+     this.bg_4.setScrollFactor(0);
+
+     this.bg_4.y = -200;
+
+     this.bg_5 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_5');
+     this.bg_5.setOrigin(0, 0);
+     this.bg_5.setScrollFactor(0);
     
-      
+     this.bg_5.y = -200;
 
+     this.bg_6 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_6');
+     this.bg_6.setOrigin(0, 0);
+     this.bg_6.setScrollFactor(0);
+
+     this.bg_6.y = -200;
+
+     this.bg_7 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_7');
+     this.bg_7.setOrigin(0, 0);
+     this.bg_7.setScrollFactor(0);
+
+     this.bg_7.y = -200;
+
+     this.bg_8 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_8');
+     this.bg_8.setOrigin(0, 0);
+     this.bg_8.setScrollFactor(0);
+
+     this.bg_8.y = -200;
+
+     this.bg_9 = this.add.tileSprite(0, 0, this.sys.game.config.width, 793, 'bg_9');
+     this.bg_9.setOrigin(0, 0);
+     this.bg_9.setScrollFactor(0);
+
+     this.bg_9.y = -200;
+
+     this.bg_10 = this.add.tileSprite(0, 0, this.sys.game.config.width, this.sys.game.config.height, 'bg_10');
+     this.bg_10.setOrigin(0, 0);
+     this.bg_10.setScrollFactor(0);
+
+     this.bg_11 = this.add.tileSprite(0, 0, this.sys.game.config.width, this.sys.game.config.height, 'bg_11');
+     this.bg_11.setOrigin(0, 0);
+     this.bg_11.setScrollFactor(0);
+     
+
+      // ground tilemap 
+
+      this.map = this.add.tilemap("tilemap");
+      let tileSet = this.map.addTilesetImage('BrownGround', 'brown_tile');
+
+      this.groundLayer = this.map.createLayer('GroundLayer', tileSet);
+      
+      this.groundLayer.setCollisionByExclusion(-1, true);
+     
+      
+      
       let coin = this.physics.add.sprite(500, 500, 'coin');
 
       coin.setImmovable(true);
       coin.anims.play('rotate');
       coin.setDepth(2);
-     
-
-      this.ground2.x = this.sys.game.config.width + 190;
-      this.ground2.y = 528;
-
-      this.ground.y = 528;
+    
 
       // add player
 
@@ -67,10 +107,9 @@ export default class GameScene extends Phaser.Scene {
       this.bulletGroup = new BulletGroup(this);
       this.addShotEvent();
      
-
-      this.physics.add.collider(this.player, this.ground);
-      this.physics.add.collider(this.player, this.ground2);
-      
+    // tile map collider
+    this.physics.add.collider(this.player, this.groundLayer);
+  
      
 
       this.myCam = this.cameras.main;
@@ -101,6 +140,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+      
     // player movement
  
     if(this.cursors.left.isDown && this.player.x > 0) {

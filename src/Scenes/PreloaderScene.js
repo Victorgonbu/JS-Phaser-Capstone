@@ -83,9 +83,24 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('phaserLogo', 'assets/logo.png');
     this.load.image('box', 'assets/ui/grey_box.png');
     this.load.image('checkedBox', 'assets/ui/blue_boxCheckmark.png');
-    this.load.image('bg_1', 'assets/bg-1.png');
-    this.load.image('bg_2', 'assets/bg-2.png');
-    this.load.image('ground', 'assets/ground.png');
+    // background
+
+    this.load.image('bg_1', 'assets/Background/Layer_0010_1.png');
+    this.load.image('bg_2', 'assets/Background/Layer_0009_2.png');
+    this.load.image('bg_3', 'assets/Background/Layer_0008_3.png');
+    this.load.image('bg_4', 'assets/Background/Layer_0007_Lights.png');
+    this.load.image('bg_5', 'assets/Background/Layer_0006_4.png');
+    this.load.image('bg_6', 'assets/Background/Layer_0005_5.png');
+    this.load.image('bg_7', 'assets/Background/Layer_0004_Lights.png');
+    this.load.image('bg_8', 'assets/Background/Layer_0003_6.png');
+    this.load.image('bg_9', 'assets/Background/Layer_0002_7.png');
+    this.load.image('bg_10', 'assets/Background/Layer_0001_8.png');
+    this.load.image('bg_11', 'assets/Background/Layer_0000_9.png');
+
+    // tilemaps
+    this.load.image('brown_tile', 'assets/jungle/tile_jungle_bottom_brown.png');
+    this.load.tilemapTiledJSON('tilemap', 'assets/BrownGround.json');
+    
     this.load.spritesheet('coin', 'assets/coin.png', {
       frameWidth: 20,
       frameHeight: 20
