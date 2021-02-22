@@ -5,6 +5,7 @@ export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
     this.bulletGroup;
+   
   }
 
   create () {
@@ -103,7 +104,7 @@ export default class GameScene extends Phaser.Scene {
 
       // add player
 
-      this.player = this.physics.add.sprite(800, 400,'idle_gun_0');
+      this.player = this.physics.add.sprite(100, 400,'idle_gun_0');
     
       this.player.setScale(0.2);
       this.isWaking = false;
@@ -118,9 +119,8 @@ export default class GameScene extends Phaser.Scene {
       
      this.zombieLayer = this.map.getObjectLayer('ZombiesLayer');
      this.zombieLayer.objects.forEach(zombieObj => {
-       this.zombies.get(zombieObj.x, zombieObj.y, 'zombie_idle_0').setScale(0.23);
-       
-     });
+     this.zombies.get(zombieObj.x, zombieObj.y, 'zombie_idle_0').setScale(0.23);
+    });
       // create cursors
 
        this.cursors = this.input.keyboard.createCursorKeys();
@@ -164,6 +164,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+    
+    // zombie 
+
+    
       
     // player movement
  
@@ -198,6 +202,16 @@ export default class GameScene extends Phaser.Scene {
     
 
     // texture scroll
+  
+    this.zombies.children.each(function(zombie) {
+      if(this.myCam.scrollX + 800 > zombie.x){
+        zombie.anims.play('run-zombie', true);
+      }else {
+        zombie.anims.play('idle-zombie', true);
+      }
+    }, this);
+    
+    
     
     this.bg_1.tilePositionX = this.myCam.scrollX * .1;
     this.bg_2.tilePositionX = this.myCam.scrollX * .2;
