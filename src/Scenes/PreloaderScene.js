@@ -98,8 +98,20 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('bg_11', 'assets/Background/Layer_0000_9.png');
 
     // tilemaps
-    this.load.image('brown_tile', 'assets/jungle/tile_jungle_bottom_brown.png');
-    this.load.tilemapTiledJSON('tilemap', 'assets/BrownGround.json');
+    // tiles
+    this.load.image('gray_ground_tile', 'assets/jungle/tile_jungle_ground_grey.png');
+    this.load.image('object_tile', 'assets/jungle/tile_jungle_plants_objects.png');
+    this.load.image('gray_bottom_tile', 'assets/jungle/tile_jungle_bottom_grey.png');
+    this.load.image('water_tile', 'assets/jungle/tile_jungle_water.png');
+    this.load.image('bridge_tile', 'assets/jungle/tile_jungle_bridge.png');
+    this.load.image('treelimb_tile', 'assets/jungle/tile_jungle_treelimb.png');
+    this.load.image('color_tile', 'assets/jungle/bg_solid_colors.png');
+    // tilemap
+    this.load.tilemapTiledJSON('tilemap', 'assets/GrayGround.json');
+
+    // background tilemap
+ 
+    this.load.tilemapTiledJSON('backgroundTilemap', 'assets/BackgroundTile.json');
     
     this.load.spritesheet('coin', 'assets/coin.png', {
       frameWidth: 20,
@@ -158,6 +170,17 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('hurt_gun_8', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_008.png');
     this.load.image('hurt_gun_9', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_009.png');
 
+    // Zombie Enemies
+
+    // idle
+
+    this.load.image('zombie_idle_0', 'assets/Zombie/Zombie1/animation/Idle1.png');
+
+    this.load.spritesheet('zombie_idle','assets/Zombie/Zombie1/animation/idle_zombie.png', {
+      frameWidth: 32,
+      frameHeight: 64
+    });
+
     // other
 
     // bullet texture
@@ -170,6 +193,12 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   create() {
+
+    // zombie animation
+
+    // idle
+   
+
      //player animation
      // gun mode
      this.anims.create({

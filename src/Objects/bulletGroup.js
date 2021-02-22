@@ -26,7 +26,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
 
     fire(x, y, facing) {
-        let bulletVelocity = 900;
+        let bulletVelocity = 3200;
         this.body.reset(x, y);
         this.setScale(0.2);
         this.setActive(true);

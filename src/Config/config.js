@@ -9,8 +9,8 @@ export default {
   physics: {
       default: "arcade",
       arcade: {
-        gravity: { y: 500 },
-        debug: false
+        gravity: { y: 900 },
+        debug: true
       }
   }
 };
