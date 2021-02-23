@@ -319,7 +319,7 @@ export default class PreloaderScene extends Phaser.Scene {
         
       ],
       frameRate: 20,
-      repeat: -1
+      repeat: 0
     });
 
     // dead
@@ -338,8 +338,9 @@ export default class PreloaderScene extends Phaser.Scene {
       
         
       ],
+      yoyo: false,
       frameRate: 20,
-      repeat: -1
+      repeat: 0
     });
 
 
