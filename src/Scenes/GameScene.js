@@ -105,7 +105,8 @@ export default class GameScene extends Phaser.Scene {
       // add player
 
       this.player = this.physics.add.sprite(100, 400,'idle_gun_0');
-    
+      this.player.setSize(this.player.width/2, this.player.height);
+      
       this.player.setScale(0.2);
       this.isWaking = false;
       this.facing = 'right';
@@ -163,6 +164,18 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  setEnemyScaleAndVelocity(zombieVelocity, zombie) {
+    if(this.player.x > zombie.x){
+      zombie.setOffset(0, 0);
+      zombie.scaleX = 0.23;
+      zombie.setVelocityX(zombieVelocity);
+    }else{
+      zombie.setOffset(222, 0);
+      zombie.scaleX = -0.23;
+      zombie.setVelocityX(zombieVelocity * -1);
+    }
+  }
+
   update() {
     
     // zombie 
@@ -176,13 +189,16 @@ export default class GameScene extends Phaser.Scene {
       this.facing = 'left';
       this.player.setVelocityX(-160);
       this.player.anims.play('run-gun', true);
+      this.player.setOffset(270, 0);
       this.player.scaleX = -0.2;
+      
 
     }else if(this.cursors.right.isDown && this.player.x < this.sys.game.config.width * 24) {
       this.isWaking = true;
       this.facing = 'right';
       this.player.setVelocityX(160);
       this.player.anims.play('run-gun', true);
+      this.player.setOffset(50, 0);
       this.player.scaleX = 0.2;
     }else if(!this.shotKeyObject.isDown){
       this.isWaking = false;
@@ -205,7 +221,22 @@ export default class GameScene extends Phaser.Scene {
   
     this.zombies.children.each(function(zombie) {
       if(this.myCam.scrollX + 800 > zombie.x){
-        zombie.anims.play('run-zombie', true);
+        
+        let zombieVelocity = 20;
+
+        this.setEnemyScaleAndVelocity(zombieVelocity, zombie);
+      
+
+        if(Math.abs(this.player.x - zombie.x) < 300){
+          let zombieSprintVelocity = 100;
+          this.setEnemyScaleAndVelocity(zombieSprintVelocity, zombie);
+          zombie.anims.play('run-zombie', true);
+
+        }else
+        {
+          zombie.anims.play('walk-zombie', true);
+        }
+        
       }else {
         zombie.anims.play('idle-zombie', true);
       }
@@ -227,4 +258,6 @@ export default class GameScene extends Phaser.Scene {
     
   
   }
+
+
 };

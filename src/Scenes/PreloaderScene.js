@@ -267,13 +267,20 @@ export default class PreloaderScene extends Phaser.Scene {
       key: 'walk-zombie', 
       frames: [
         { key: 'zombie_walk_0' },
+        { key: 'zombie_walk_0' },
+        { key: 'zombie_walk_1' },
         { key: 'zombie_walk_1' },
         { key: 'zombie_walk_2' },
+        { key: 'zombie_walk_2' },
+        { key: 'zombie_walk_3' },
         { key: 'zombie_walk_3' },
         { key: 'zombie_walk_4' },
+        { key: 'zombie_walk_4' },
+        { key: 'zombie_walk_5' },
         { key: 'zombie_walk_5' },
       ],
-      frameRate: 20,
+      yoyo: false,
+      frameRate: 18,
       repeat: -1
     });
 
@@ -282,9 +289,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.anims.create({
       key: 'run-zombie', 
       frames: [
-        { key: 'zombie_run_0' },
-        { key: 'zombie_run_1' },
-        { key: 'zombie_run_2' },
+    
         { key: 'zombie_run_3' },
         { key: 'zombie_run_4' },
         { key: 'zombie_run_5' },
@@ -294,7 +299,8 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'zombie_run_9' },
         
       ],
-      frameRate: 20,
+      yoyo: false,
+      frameRate: 18,
       repeat: -1
     });
 
