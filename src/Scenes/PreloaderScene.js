@@ -235,7 +235,9 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('bullet', 'assets/Soldier-Guy-PNG/_Weapon/Bullet.png');
     
 
+    // game sounds
 
+    this.load.audio('gun_shot', ['assets/sfx/shot_01.ogg']);
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
 
   }

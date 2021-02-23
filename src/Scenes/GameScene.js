@@ -5,10 +5,13 @@ export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
     this.bulletGroup;
-    this.hurt = false
+    this.score = 0;
+    
   }
 
   create () {
+
+   
   
       // background
 
@@ -68,6 +71,13 @@ export default class GameScene extends Phaser.Scene {
 
    
     
+     // score hud
+
+     this.scoreText = this.add.text(16, 20, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+
+     // sfx sounds
+
+     this.gunShot = this.sound.add('gun_shot', { volume: 0.5, loop: false });
 
       // ground tilemap 
 
@@ -144,7 +154,7 @@ export default class GameScene extends Phaser.Scene {
       
 
         zombie.health -= 1;
-
+        
         if(zombie.health <= 0 && zombie.dead === false){
           zombie.play('dead-zombie');
           zombie.setSize(zombie.width * 2, zombie.height/2 - 20);
@@ -173,8 +183,9 @@ export default class GameScene extends Phaser.Scene {
       
   }
 
-  hurtState() {
-    return this.hurt;
+  scoreUp() {
+    this.score += 10;
+    this.scoreText.setText('Score: ' + this.score);
   }
 
   addShotEvent() {
@@ -185,6 +196,7 @@ export default class GameScene extends Phaser.Scene {
 
   shootBullet() {
     if(!this.isWaking){
+      this.gunShot.play();
       if(this.facing === 'right'){
         this.bulletGroup.fireBullet(this.player.x + 5, this.player.y + 10, 'right');
       }else {
@@ -275,16 +287,20 @@ export default class GameScene extends Phaser.Scene {
           zombie.anims.play('run-zombie', true);
   
         }else if(zombie.health <= 0){
-          
+          zombie.on('animationcomplete', () => {
+            this.zombies.killAndHide(zombie);
+            this.zombies.remove(zombie);
+            this.scoreUp();
+          });
           zombie.setVelocityX(0);
-          console.log(zombie.health);
+            
         }
         
       }
     }, this);
     
     
-    
+    this.scoreText.setX(this.myCam.scrollX + 20);
     this.bg_1.tilePositionX = this.myCam.scrollX * .1;
     this.bg_2.tilePositionX = this.myCam.scrollX * .2;
     this.bg_3.tilePositionX = this.myCam.scrollX * .3;
