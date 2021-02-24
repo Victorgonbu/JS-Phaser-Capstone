@@ -236,7 +236,11 @@ export default class PreloaderScene extends Phaser.Scene {
     
 
     // game sounds
-
+    this.load.audio('bg_sound', ['assets/bg-music.ogg']);
+    this.load.audio('zombie_dead_sound', ['assets/sfx/dead-zombie.mp3']);
+    this.load.audio('zombie_run_sound', ['assets/sfx/run-zombie.mp3']);
+    this.load.audio('zombie_hurt_sound', ['assets/sfx/hurt-zombie.wav']);
+    this.load.audio('zombie_idle_sound', ['assets/sfx/zombie-idle.mp3']);
     this.load.audio('gun_shot', ['assets/sfx/shot_01.ogg']);
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
 
@@ -399,7 +403,7 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'shot_gun_9' },
 
       ],
-      frameRate: 40,
+      frameRate: 60,
       repeat: 0
     });
     
@@ -429,7 +433,7 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'hurt_gun_9' },
       ],
       frameRate: 40,
-      repeat: 1,
+      repeat: 0,
     });
   
 

@@ -11,7 +11,16 @@ export default class GameScene extends Phaser.Scene {
 
   create () {
 
-   
+      
+     // sfx sounds
+     this.bgMusic = this.sound.add('bg_sound', { volume: 0.2, loop: true, delay: 5000}); 
+     this.gunShot = this.sound.add('gun_shot', { volume: 0.4, loop: false });
+     this.zombieEffect = this.sound.add('zombie_idle_sound', { volume: 0.1, loop: true, mute: false, rate: 0.7, detune: 0, delay: 0}); 
+    
+
+     this.bgMusic.play();
+
+
   
       // background
 
@@ -75,10 +84,6 @@ export default class GameScene extends Phaser.Scene {
 
      this.scoreText = this.add.text(16, 20, 'Score: 0', { fontSize: '32px', fill: '#fff' });
 
-     // sfx sounds
-
-     this.gunShot = this.sound.add('gun_shot', { volume: 0.5, loop: false });
-
       // ground tilemap 
 
       this.map = this.add.tilemap("tilemap");
@@ -102,13 +107,14 @@ export default class GameScene extends Phaser.Scene {
      
       this.physicsLayer.setCollisionByExclusion(-1, true);
       this.groundLayer.setCollisionByExclusion(-1, true);
+      this.waterLayer.setCollisionByExclusion(-1, true);
      
       
       
       let coin = this.physics.add.sprite(500, 500, 'coin');
 
       coin.setImmovable(true);
-      coin.anims.play('rotate');
+      coin.anims.play('rotate');  
       coin.setDepth(2);
     
 
@@ -116,8 +122,9 @@ export default class GameScene extends Phaser.Scene {
 
       this.player = this.physics.add.sprite(100, 400,'idle_gun_0');
       this.player.setSize(this.player.width/2, this.player.height);
-      
+      this.player.isDead = false;
       this.player.setScale(0.2);
+      this.playerHealth = 1;
       this.isWaking = false;
       this.facing = 'right';
 
@@ -126,14 +133,22 @@ export default class GameScene extends Phaser.Scene {
       this.zombies = this.physics.add.group();
       
      
-     console.log(this.map.objects[0].objects);
+ 
       
      this.zombieLayer = this.map.getObjectLayer('ZombiesLayer');
      this.zombieLayer.objects.forEach(zombieObj => {
        let zombie = this.zombies.get(zombieObj.x, zombieObj.y, 'zombie_idle_0').setScale(0.23);
-       zombie.play('walk-zombie');
+       zombie.play('idle-zombie');
         zombie.health = 20;
         zombie.dead = false;
+        zombie.hurt = false;
+        zombie.isWaking = false;
+        zombie.on('animationrepeat', () => {
+          if((zombie.anims.currentAnim.key === 'walk-zombie' || zombie.anims.currentAnim.key === 'run-zombie') && zombie.isWaking === false && zombie.dead === false){
+            this.zombieEffect.play();
+            zombie.isWaking = true;
+          }
+        });
     });
       // create cursors
 
@@ -149,25 +164,32 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.groundLayer);
     this.physics.add.collider(this.player, this.physicsLayer);
     this.physics.add.collider(this.groundLayer, this.zombies);
-    this.physics.add.collider(this.player, this.zombies);
+    this.physics.add.collider(this.player, this.waterLayer, function(player, water) {
+      // player collide with water
+      player.isDead = true;
+     
+
+    });
+    this.physics.add.collider(this.player, this.zombies, function (player, zombie) {
+      // player collide with zombies
+      player.isDead = true;
+
+    });
     this.physics.add.collider(this.zombies, this.bulletGroup, function(zombie, bullet) {
       
-
+        // zombie collide with bullets
         zombie.health -= 1;
         
+
         if(zombie.health <= 0 && zombie.dead === false){
           zombie.play('dead-zombie');
           zombie.setSize(zombie.width * 2, zombie.height/2 - 20);
           zombie.dead = true;
-          console.log(zombie);
+          
+          
           
         }else if (zombie.dead === false){
-          zombie.play('hurt-zombie');
-          zombie.on('animationcomplete', () => {
-            if(zombie.health > 0){
-              zombie.play('walk-zombie');
-            }
-          });
+          zombie.hurt = true;
         }
         
        
@@ -223,6 +245,7 @@ export default class GameScene extends Phaser.Scene {
         zombie.setVelocityX(zombieVelocity * -1);
       }else 
       {
+        
         zombie.setOffset(400, 0);
       }
      
@@ -237,7 +260,7 @@ export default class GameScene extends Phaser.Scene {
       
     // player movement
  
-    if(this.cursors.left.isDown && this.player.x > 0) {
+    if(this.cursors.left.isDown && this.player.x > 0 && this.player.isDead === false) {
       this.isWaking = true;
       this.facing = 'left';
       this.player.setVelocityX(-160);
@@ -246,20 +269,29 @@ export default class GameScene extends Phaser.Scene {
       this.player.scaleX = -0.2;
       
 
-    }else if(this.cursors.right.isDown && this.player.x < this.sys.game.config.width * 24) {
+    }else if(this.cursors.right.isDown && this.player.x < this.sys.game.config.width * 24 && this.player.isDead === false) {
       this.isWaking = true;
       this.facing = 'right';
       this.player.setVelocityX(160);
       this.player.anims.play('run-gun', true);
       this.player.setOffset(50, 0);
       this.player.scaleX = 0.2;
-    }else if(!this.shotKeyObject.isDown){
+    }else if(!this.shotKeyObject.isDown && this.player.isDead === false){
       this.isWaking = false;
-      this.player.anims.play('idle-gun', true);
+      
+      this.player.play('idle-gun', true);
       this.player.setVelocityX(0);
+    }else if (this.player.isDead === true) {
+      this.player.play('hurt-gun', true);
+      this.player.on('animationcomplete', () => {
+
+        this.scene.start('Title');
+      });
+      this.player.setVelocity(0);
+      
     }
 
-    if (this.cursors.up.isDown){
+    if (this.cursors.up.isDown && this.player.isDead === false){
       this.player.anims.play('jump-gun');
       this.player.setVelocityY(-160);
     }
@@ -274,26 +306,45 @@ export default class GameScene extends Phaser.Scene {
 
   
     this.zombies.children.each(function(zombie) {
+     
       if(this.myCam.scrollX + 800 > zombie.x){
+        if(zombie.y >= 600){
+          this.zombies.killAndHide(zombie);
+          this.zombies.remove(zombie);
+          this.zombieEffect.stop();
+        }
         
         let zombieVelocity = 20;
 
         this.setEnemyScaleAndVelocity(zombieVelocity, zombie);
-      
+        
+        
 
-        if(Math.abs(this.player.x - zombie.x) < 300 && zombie.health > 0){
-          let zombieSprintVelocity = 100;
-          this.setEnemyScaleAndVelocity(zombieSprintVelocity, zombie);
-          zombie.anims.play('run-zombie', true);
-  
-        }else if(zombie.health <= 0){
+        if(zombie.dead == true){
+          
           zombie.on('animationcomplete', () => {
             this.zombies.killAndHide(zombie);
             this.zombies.remove(zombie);
             this.scoreUp();
+            this.zombieEffect.stop();
           });
+        
           zombie.setVelocityX(0);
             
+          
+        }else if(Math.abs(this.player.x - zombie.x) < 300 && zombie.health > 0 && zombie.hurt == false){
+          let zombieSprintVelocity = 100;
+          this.setEnemyScaleAndVelocity(zombieSprintVelocity, zombie);
+          zombie.anims.play('run-zombie', true);
+
+        }else if(zombie.hurt === true) {
+          zombie.anims.play('hurt-zombie', true);
+          zombie.on('animationcomplete', () => {
+            zombie.hurt = false;
+          });
+        }
+        else{
+          zombie.anims.play('walk-zombie', true);
         }
         
       }
