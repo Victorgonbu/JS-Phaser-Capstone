@@ -21,6 +21,9 @@ export default class GameScene extends Phaser.Scene {
      this.bgMusic.play();
 
 
+     // model - game config
+
+     this.model = this.sys.game.globals.model.gameOptions;
   
       // background
 
@@ -125,6 +128,7 @@ export default class GameScene extends Phaser.Scene {
       this.player.isDead = false;
       this.player.setScale(0.2);
       this.playerHealth = 1;
+      this.canDoubleJump = true;
       this.isWaking = false;
       this.facing = 'right';
 
@@ -260,11 +264,14 @@ export default class GameScene extends Phaser.Scene {
       
     // player movement
  
-    if(this.cursors.left.isDown && this.player.x > 0 && this.player.isDead === false) {
+    if(this.cursors.left.isDown && this.player.x > 0 && this.player.isDead === false ) {
       this.isWaking = true;
       this.facing = 'left';
       this.player.setVelocityX(-160);
-      this.player.anims.play('run-gun', true);
+      if(this.player.body.onFloor()){
+        this.player.anims.play('run-gun', true);
+      }
+      
       this.player.setOffset(270, 0);
       this.player.scaleX = -0.2;
       
@@ -273,7 +280,9 @@ export default class GameScene extends Phaser.Scene {
       this.isWaking = true;
       this.facing = 'right';
       this.player.setVelocityX(160);
-      this.player.anims.play('run-gun', true);
+      if(this.player.body.onFloor()){
+        this.player.anims.play('run-gun', true);
+      }
       this.player.setOffset(50, 0);
       this.player.scaleX = 0.2;
     }else if(!this.shotKeyObject.isDown && this.player.isDead === false){
@@ -291,9 +300,20 @@ export default class GameScene extends Phaser.Scene {
       
     }
 
-    if (this.cursors.up.isDown && this.player.isDead === false){
-      this.player.anims.play('jump-gun');
-      this.player.setVelocityY(-160);
+ 
+    let jumpKey = Phaser.Input.Keyboard.JustDown(this.cursors.up);
+    if (jumpKey){
+    
+      if(this.player.body.onFloor()) {
+        this.canDoubleJump = true;
+        this.player.anims.play('jump-gun');
+        this.player.body.setVelocityY(-200);
+      }else if (this.canDoubleJump) {
+        this.player.body.setVelocityY(-200);
+        this.player.anims.play('jump-gun');
+        this.canDoubleJump = false;
+      }
+     
     }
 
     this.shotKeyObject.on('down', function() {

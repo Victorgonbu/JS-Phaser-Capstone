@@ -414,7 +414,7 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'jump_gun_0' }
       ],
       frameRate: 1,
-      repeat: 1
+      repeat: 0
 
     });
 

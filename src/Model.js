@@ -7,7 +7,9 @@ export default class Model {
     }
 
     get gameOptions() {
-        return {}
+        return {
+            jumps: 4,
+        }
     }
 
     set musicOn(value) {
