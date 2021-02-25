@@ -8,7 +8,14 @@ export default class Model {
 
     get gameOptions() {
         return {
-            jumps: 4,
+            backgroundHeight: 793,
+            backgroundOffset: -185,
+            playerStartPositionX: 100,
+            playerStartPositionY: 510,
+            leftPlayerOffset: 270,
+            rightPlayerOffset: 50,
+            playerVelocity: 160,
+            playerScale: 0.2
         }
     }
 
