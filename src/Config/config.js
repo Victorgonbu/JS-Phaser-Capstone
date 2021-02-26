@@ -5,7 +5,9 @@ export default {
   parent: 'game-canvas',
   width: 800,
   height: 600,
-  backgroundColor: 0x87CEEB,
+  dom: {
+    createContainer: true
+  },
   physics: {
       default: "arcade",
       arcade: {

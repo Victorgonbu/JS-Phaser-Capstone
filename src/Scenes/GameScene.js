@@ -5,7 +5,6 @@ export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
     this.bulletGroup;
-    this.score = 0;
     this.backgroundLayers = [];
     this.scrollMultiply = 0.1;
     
@@ -45,7 +44,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addPlayer() {
-      this.player = this.physics.add.sprite(this.model.playerStartPositionX, this.model.playerStartPositionY,'idle_gun_0');
+    //this.model.playerStartPositionX
+      this.player = this.physics.add.sprite(this.sys.game.config.width * 23 - 300, this.model.playerStartPositionY,'idle_gun_0');
       this.player.setSize(this.player.width/2, this.player.height);
       this.player.isDead = false;
       this.player.setScale(this.model.playerScale);
@@ -78,7 +78,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create () {
-
+    //score
+    this.score = 0;
     // model for game options
     this.model = this.sys.game.globals.model.gameOptions;
     
@@ -268,13 +269,29 @@ export default class GameScene extends Phaser.Scene {
       
   }
 
+  killGame() {
+    this.backgroundLayers = [];
+    
+    this.scene.start('GameOver', {
+      complete: false,
+      score: this.score,
+    });
+    this.bgMusic.stop();
+    this.zombieEffect.stop();
+   
+   
+  }
+
+
+
   killPlayer() {
+    this.player.setVelocity(0);
     this.player.play('hurt-gun', true);
     this.player.on('animationcomplete', () => {
-      this.backgroundLayers = [];
-      this.scene.start('Title');
+      this.killGame();
+      
     });
-    this.player.setVelocity(0);
+    
   }
 
   playerJump(jumpPressed) {
@@ -311,6 +328,10 @@ export default class GameScene extends Phaser.Scene {
       this.playerIdle();
     }else if (this.player.isDead === true) {
       this.killPlayer();
+    }
+    
+    if(this.player.x > this.sys.game.config.width * 24){
+      this.scene.start('Title');
     }
 
  

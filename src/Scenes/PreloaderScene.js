@@ -78,6 +78,8 @@ export default class PreloaderScene extends Phaser.Scene {
     }.bind(this));
 
     // load assets needed in our game
+
+    this.load.html('nameform', 'assets/text/inputField.html');
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
     this.load.image('blueButton2', 'assets/ui/blue_button03.png');
     this.load.image('phaserLogo', 'assets/logo.png');
