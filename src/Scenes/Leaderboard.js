@@ -20,31 +20,41 @@ export default class Leaderboard extends Phaser.Scene {
   }
 
   processRequest(request) {
-    request.then((response) => {
+    return request.then((response) => {
         return response.json();
     }).then((response) => {
         return response.result.sort((a, b) => {
             return b.score - a.score
         });
     }).then((response) => {
-        let i = 1
-        let verticalSpace = 60
-        response.forEach(user => {
-        
-           this.displayScore(user, verticalSpace, i);
-            verticalSpace += 30;
-            i += 1;
-        });
+       return response
     });
+  }
+
+  createScoreList(list) {
+    let i = 1
+    let verticalSpace = 70
+    list.forEach(user => {
+       this.displayScore(user, verticalSpace, i);
+        verticalSpace += 30;
+        i += 1;
+    });
+
   }
 
   create () {
     let config = this.cache.json.get('gamma_json');
     this.cache.bitmapFont.add('gamma', Phaser.GameObjects.RetroFont.Parse(this, config));
     this.text = this.add.bitmapText(this.sys.game.config.width/2 - 176/2, 10, 'gamma', 'LEADERBOARD');
+    this.username = this.add.bitmapText(this.sys.game.config.width - 700, 10, 'gamma', 'USERNAME');
+    this.score = this.add.bitmapText(this.sys.game.config.width - 150, 10, 'gamma', 'SCORE');
     
     let scoresRequest = this.requestScores();
-    this.processRequest(scoresRequest)
+    let scoreList= this.processRequest(scoresRequest)
+    scoreList.then((list) => {
+        this.createScoreList(list);
+    });
+    
 
     this.titleButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 80, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
