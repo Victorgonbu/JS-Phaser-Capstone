@@ -40,12 +40,11 @@ export default class GameScene extends Phaser.Scene {
       this.backgroundLayer = this.map.createLayer('BackgroundGround', [waterSet, groundSet, treelimbSet]);
       this.waterLayer = this.map.createLayer('WaterLayer', waterSet);
       this.objectLayer = this.map.createLayer('Objects', [bridgeSet, ObjectSet]);
-      this.physicsLayer = this.map.createLayer('PhysicsOn', [groundSet, bottomGroundSet ,bridgeSet]);
   }
 
   addPlayer() {
   
-      this.player = this.physics.add.sprite(18000, this.model.playerStartPositionY,'idle_gun_0');
+      this.player = this.physics.add.sprite(this.model.playerStartPositionX, this.model.playerStartPositionY,'idle_gun_0');
       this.player.setSize(this.player.width/2, this.player.height);
       this.player.isDead = false;
       this.player.setScale(this.model.playerScale);
@@ -114,7 +113,6 @@ export default class GameScene extends Phaser.Scene {
 
     // add collision to some tile layers 
 
-      this.physicsLayer.setCollisionByExclusion(-1, true);
       this.groundLayer.setCollisionByExclusion(-1, true);
       this.waterLayer.setCollisionByExclusion(-1, true);
      
