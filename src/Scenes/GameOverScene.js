@@ -53,8 +53,13 @@ export default class GameOverScene extends Phaser.Scene {
     this.gameButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 200, 'blueButton1', 'blueButton2', 'Play Again', 'Game');
     this.leaderButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 140, 'blueButton1', 'blueButton2', 'Leaderboard', 'Leaderboard');
     this.titleButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 80, 'blueButton1', 'blueButton2', 'Menu', 'Title');
-    let text = this.add.text(this.sys.game.config.width / 2 - 406/2, 100, 'Game over manin', { color: 'white', fontSize: '45px'});
-
+    let gameOverMessage = 'Game Over'
+    let textWidth = 244;
+    if(data.complete === true) {
+      gameOverMessage += ' manin'
+      textWidth = 406;
+    }
+    let text = this.add.text(this.sys.game.config.width / 2 - textWidth/2, 100, gameOverMessage, { color: 'white', fontSize: '45px'});
     let score = this.add.text(this.sys.game.config.width / 2 - 307/2, text.displayHeight + 110, `Your score was: ${data.score}`, { color: 'white', fontSize: '30px'});
     
     let element = this.add.dom(400, 0).createFromCache('nameform');
