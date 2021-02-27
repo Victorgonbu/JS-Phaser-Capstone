@@ -15,7 +15,8 @@ export default class Model {
             leftPlayerOffset: 270,
             rightPlayerOffset: 50,
             playerVelocity: 160,
-            playerScale: 0.2
+            playerScale: 0.2,
+            url: 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/o6CKpBlLsn3JiOcASy7Z/scores'
         }
     }
 

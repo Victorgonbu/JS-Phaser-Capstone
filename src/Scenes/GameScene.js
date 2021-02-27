@@ -278,8 +278,6 @@ export default class GameScene extends Phaser.Scene {
     });
     this.bgMusic.stop();
     this.zombieEffect.stop();
-   
-   
   }
 
 

@@ -31,9 +31,8 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   setScoreInLeaderboard(name, score) {
-    let url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/o6CKpBlLsn3JiOcASy7Z/scores';
-    console.log(name);
-    console.log(score);
+    let url = this.sys.game.globals.model.gameOptions.url;
+  
     let requestParameters = {
       user: name,
       score: score
@@ -56,7 +55,7 @@ export default class GameOverScene extends Phaser.Scene {
   create (data) {
     
     this.gameButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 200, 'blueButton1', 'blueButton2', 'Play Again', 'Game');
-    this.leaderButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 140, 'blueButton1', 'blueButton2', 'Leaderboard', 'Game');
+    this.leaderButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 140, 'blueButton1', 'blueButton2', 'Leaderboard', 'Leaderboard');
     this.titleButton = new Button(this, this.sys.game.config.width/2, this.sys.game.config.height- 80, 'blueButton1', 'blueButton2', 'Menu', 'Title');
     let text = this.add.text(this.sys.game.config.width / 2 - 406/2, 100, 'Game over manin', { color: 'white', fontSize: '45px'});
 
