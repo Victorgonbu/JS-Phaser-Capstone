@@ -44,8 +44,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addPlayer() {
-    //this.model.playerStartPositionX
-      this.player = this.physics.add.sprite(this.sys.game.config.width * 23 - 300, this.model.playerStartPositionY,'idle_gun_0');
+  
+      this.player = this.physics.add.sprite(this.model.playerStartPositionX, this.model.playerStartPositionY,'idle_gun_0');
       this.player.setSize(this.player.width/2, this.player.height);
       this.player.isDead = false;
       this.player.setScale(this.model.playerScale);
@@ -78,10 +78,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create () {
+
+    
     //score
     this.score = 0;
     // model for game options
     this.model = this.sys.game.globals.model.gameOptions;
+    this.sys.game.globals.bgMusic.stop();
+
     
     this.addSfxSounds();
 

@@ -46,10 +46,6 @@ export default class GameOverScene extends Phaser.Scene {
       body: JSON.stringify(requestParameters),
     });
 
-    leaderboardRequest.then((response) => {
-      console.log(response.json());
-    });
-
   }
 
   create (data) {
@@ -60,7 +56,6 @@ export default class GameOverScene extends Phaser.Scene {
     let text = this.add.text(this.sys.game.config.width / 2 - 406/2, 100, 'Game over manin', { color: 'white', fontSize: '45px'});
 
     let score = this.add.text(this.sys.game.config.width / 2 - 307/2, text.displayHeight + 110, `Your score was: ${data.score}`, { color: 'white', fontSize: '30px'});
-    console.log(score.displayWidth);
     
     let element = this.add.dom(400, 0).createFromCache('nameform');
     element.addListener('click');

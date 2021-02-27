@@ -33,7 +33,7 @@ export default class Leaderboard extends Phaser.Scene {
 
   createScoreList(list) {
     let i = 1
-    let verticalSpace = 70
+    let verticalSpace = 90
     list.forEach(user => {
        this.displayScore(user, verticalSpace, i);
         verticalSpace += 30;
@@ -46,8 +46,8 @@ export default class Leaderboard extends Phaser.Scene {
     let config = this.cache.json.get('gamma_json');
     this.cache.bitmapFont.add('gamma', Phaser.GameObjects.RetroFont.Parse(this, config));
     this.text = this.add.bitmapText(this.sys.game.config.width/2 - 176/2, 10, 'gamma', 'LEADERBOARD');
-    this.username = this.add.bitmapText(this.sys.game.config.width - 700, 10, 'gamma', 'USERNAME');
-    this.score = this.add.bitmapText(this.sys.game.config.width - 150, 10, 'gamma', 'SCORE');
+    this.username = this.add.bitmapText(this.sys.game.config.width - 700, 50, 'gamma', 'USERNAME');
+    this.score = this.add.bitmapText(this.sys.game.config.width - 150, 50, 'gamma', 'SCORE');
     
     let scoresRequest = this.requestScores();
     let scoreList= this.processRequest(scoresRequest)
