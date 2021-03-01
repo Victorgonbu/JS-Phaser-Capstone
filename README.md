@@ -123,6 +123,7 @@ I was only able to implement the first two even though I took more time than exp
 - HTML
 - Phaser 3
 - Webpack
+- Tiled
 - Babel
 - Leaderboard API
 - JEST testing
