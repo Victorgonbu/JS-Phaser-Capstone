@@ -90,7 +90,7 @@ Make a way through the zombies and survive.
   - Learned tiled to implement a tilemap in the game.
   - Finished main game scene with tiled knowledge acquired.
 
-- **Day 5**
+- **Day 9**
 
 **Game Development**
   - Implement GameOver scene
