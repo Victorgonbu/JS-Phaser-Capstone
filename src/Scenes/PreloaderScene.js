@@ -1,91 +1,91 @@
 import 'phaser';
 
 export default class PreloaderScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Preloader');
   }
 
-  init () {
+  init() {
     this.readyCount = 0;
   }
 
-  preload () {
+  preload() {
     // add logo image
     this.add.image(400, 200, 'logo');
 
     // display progress bar
-    var progressBar = this.add.graphics();
-    var progressBox = this.add.graphics();
+    const progressBar = this.add.graphics();
+    const progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(240, 400, 320, 50);
 
-    var width = this.cameras.main.width;
-    var height = this.cameras.main.height;
-    var loadingText = this.make.text({
+    const { width } = this.cameras.main;
+    const { height } = this.cameras.main;
+    const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 + 80,
       text: 'Loading...',
       style: {
         font: '20px monospace',
-        fill: '#ffffff'
-      }
+        fill: '#ffffff',
+      },
     });
     loadingText.setOrigin(0.5, 0.5);
 
-    var percentText = this.make.text({
+    const percentText = this.make.text({
       x: width / 2,
       y: height / 2 + 125,
       text: '0%',
       style: {
         font: '18px monospace',
-        fill: '#ffffff'
-      }
+        fill: '#ffffff',
+      },
     });
     percentText.setOrigin(0.5, 0.5);
 
-    var assetText = this.make.text({
+    const assetText = this.make.text({
       x: width / 2,
       y: height / 2 + 170,
       text: '',
       style: {
         font: '18px monospace',
-        fill: '#ffffff'
-      }
+        fill: '#ffffff',
+      },
     });
     assetText.setOrigin(0.5, 0.5);
 
     // update progress bar
-    this.load.on('progress', function (value) {
-      percentText.setText(parseInt(value * 100) + '%');
+    this.load.on('progress', (value) => {
+      percentText.setText(`${parseInt(value * 100)}%`);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 410, 300 * value, 30);
     });
 
     // update file progress text
-    this.load.on('fileprogress', function (file) {
-      assetText.setText('Loading asset: ' + file.key);
+    this.load.on('fileprogress', (file) => {
+      assetText.setText(`Loading asset: ${file.key}`);
     });
 
     // remove progress bar when complete
-    this.load.on('complete', function () {
+    this.load.on('complete', () => {
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
       percentText.destroy();
       assetText.destroy();
       this.ready();
-    }.bind(this));
+    });
 
     // load assets needed in our game
 
-    // font 
+    // font
 
     this.load.image('gamma', 'assets/Font/gamma.png');
     this.load.json('gamma_json', 'assets/Font/gamma.json');
 
     // ui
-  
+
 
     this.load.html('nameform', 'assets/text/inputField.html');
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
@@ -120,12 +120,12 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('tilemap', 'assets/GrayGround.json');
 
     // background tilemap
- 
+
     this.load.tilemapTiledJSON('backgroundTilemap', 'assets/BackgroundTile.json');
-    
+
     this.load.spritesheet('coin', 'assets/coin.png', {
       frameWidth: 20,
-      frameHeight: 20
+      frameHeight: 20,
     });
     // player gun mode
     // idle
@@ -167,8 +167,8 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // jump´
     this.load.image('jump_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/05-Jump/E_E_Gun__Jump_000.png');
-  
-    // hurt 
+
+    // hurt
     this.load.image('hurt_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_000.png');
     this.load.image('hurt_gun_1', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_001.png');
     this.load.image('hurt_gun_2', 'assets/Soldier-Guy-PNG/_Mode-Gun/04-Hurt/E_E_Gun__Hurt_002.png');
@@ -232,18 +232,16 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('zombie_dead_7', 'assets/Zombie/Zombie1/animation/Dead8.png');
 
 
-
-
-    this.load.spritesheet('zombie_idle','assets/Zombie/Zombie1/animation/idle_zombie.png', {
+    this.load.spritesheet('zombie_idle', 'assets/Zombie/Zombie1/animation/idle_zombie.png', {
       frameWidth: 32,
-      frameHeight: 64
+      frameHeight: 64,
     });
 
     // other
 
     // bullet texture
     this.load.image('bullet', 'assets/Soldier-Guy-PNG/_Weapon/Bullet.png');
-    
+
 
     // game sounds
     this.load.audio('bg_sound', ['assets/bg-music.ogg']);
@@ -253,16 +251,14 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.audio('zombie_idle_sound', ['assets/sfx/zombie-idle.mp3']);
     this.load.audio('gun_shot', ['assets/sfx/shot_01.ogg']);
     this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
-
   }
 
   create() {
-
     // zombie animation
 
     // idle
     this.anims.create({
-      key: 'idle-zombie', 
+      key: 'idle-zombie',
       frames: [
         { key: 'zombie_idle_0' },
         { key: 'zombie_idle_1' },
@@ -274,13 +270,13 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'zombie_idle_0' },
       ],
       frameRate: 16,
-      repeat: -1
+      repeat: -1,
     });
 
     // walk
 
     this.anims.create({
-      key: 'walk-zombie', 
+      key: 'walk-zombie',
       frames: [
         { key: 'zombie_walk_0' },
         { key: 'zombie_walk_0' },
@@ -297,15 +293,15 @@ export default class PreloaderScene extends Phaser.Scene {
       ],
       yoyo: false,
       frameRate: 18,
-      repeat: -1
+      repeat: -1,
     });
 
     // run
 
     this.anims.create({
-      key: 'run-zombie', 
+      key: 'run-zombie',
       frames: [
-    
+
         { key: 'zombie_run_3' },
         { key: 'zombie_run_4' },
         { key: 'zombie_run_5' },
@@ -313,35 +309,35 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'zombie_run_7' },
         { key: 'zombie_run_8' },
         { key: 'zombie_run_9' },
-        
+
       ],
       yoyo: false,
       frameRate: 18,
-      repeat: -1
+      repeat: -1,
     });
 
 
     // hurt
 
     this.anims.create({
-      key: 'hurt-zombie', 
+      key: 'hurt-zombie',
       frames: [
         { key: 'zombie_hurt_0' },
         { key: 'zombie_hurt_1' },
         { key: 'zombie_hurt_2' },
         { key: 'zombie_hurt_3' },
         { key: 'zombie_hurt_4' },
-      
-        
+
+
       ],
       frameRate: 20,
-      repeat: 0
+      repeat: 0,
     });
 
     // dead
 
     this.anims.create({
-      key: 'dead-zombie', 
+      key: 'dead-zombie',
       frames: [
         { key: 'zombie_dead_0' },
         { key: 'zombie_dead_1' },
@@ -351,19 +347,19 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'zombie_dead_5' },
         { key: 'zombie_dead_6' },
         { key: 'zombie_dead_7' },
-      
-        
+
+
       ],
       yoyo: false,
       frameRate: 20,
-      repeat: 0
+      repeat: 0,
     });
 
 
-     //player animation
-     // gun mode
-     this.anims.create({
-      key: 'idle-gun', 
+    // player animation
+    // gun mode
+    this.anims.create({
+      key: 'idle-gun',
       frames: [
         { key: 'idle_gun_0' },
         { key: 'idle_gun_1' },
@@ -374,28 +370,28 @@ export default class PreloaderScene extends Phaser.Scene {
         { key: 'idle_gun_6' },
         { key: 'idle_gun_7' },
         { key: 'idle_gun_8' },
-        { key: 'idle_gun_9' }
+        { key: 'idle_gun_9' },
       ],
       frameRate: 20,
-      repeat: -1
+      repeat: -1,
     });
 
     this.anims.create({
       key: 'run-gun',
       frames: [
-        { key: 'run_gun_0'},
-        { key: 'run_gun_1'},
-        { key: 'run_gun_2'},
-        { key: 'run_gun_3'},
-        { key: 'run_gun_4'},
-        { key: 'run_gun_5'},
-        { key: 'run_gun_6'},
-        { key: 'run_gun_7'},
-        { key: 'run_gun_8'},
-        { key: 'run_gun_9'},
+        { key: 'run_gun_0' },
+        { key: 'run_gun_1' },
+        { key: 'run_gun_2' },
+        { key: 'run_gun_3' },
+        { key: 'run_gun_4' },
+        { key: 'run_gun_5' },
+        { key: 'run_gun_6' },
+        { key: 'run_gun_7' },
+        { key: 'run_gun_8' },
+        { key: 'run_gun_9' },
       ],
-      frameRate: 20, 
-      repeat: -1
+      frameRate: 20,
+      repeat: -1,
     });
 
     this.anims.create({
@@ -414,17 +410,17 @@ export default class PreloaderScene extends Phaser.Scene {
 
       ],
       frameRate: 60,
-      repeat: 0
+      repeat: 0,
     });
-    
+
 
     this.anims.create({
       key: 'jump-gun',
       frames: [
-        { key: 'jump_gun_0' }
+        { key: 'jump_gun_0' },
       ],
       frameRate: 1,
-      repeat: 0
+      repeat: 0,
 
     });
 
@@ -445,29 +441,27 @@ export default class PreloaderScene extends Phaser.Scene {
       frameRate: 40,
       repeat: 0,
     });
-  
 
-     // coin animation
-     this.anims.create({
+
+    // coin animation
+    this.anims.create({
       key: 'rotate',
       frames: this.anims.generateFrameNumbers('coin', {
         start: 0,
-        end: 5
+        end: 5,
       }),
       frameRate: 15,
       yoyo: true,
-      repeat: -1
+      repeat: -1,
     });
 
     // fire animation
-
-  
   }
 
-  ready () {
+  ready() {
     this.readyCount++;
     if (this.readyCount === 1) {
       this.scene.start('Title');
     }
   }
-};
+}
