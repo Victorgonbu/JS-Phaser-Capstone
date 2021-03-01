@@ -1,8 +1,8 @@
 # ZOMBIE RAID
 A JavaScript platform game built with Phaser 3.
 
-![screenshot](./dist/assets/Screenshots/Screenshot_1.PNG)
-![screenshot2](./dist/assets/Screenshots/Screenshot_2.PNG)
+![screenshot](./dist/assets/Screenshots/Screenshot_1.png)
+![screenshot2](./dist/assets/Screenshots/Screenshot_2.png)
 
 
 ## Table of Contents
