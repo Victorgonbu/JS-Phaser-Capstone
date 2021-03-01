@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 import Button from '../Objects/Button';
 
 export default class GameOverScene extends Phaser.Scene {
@@ -36,7 +36,7 @@ export default class GameOverScene extends Phaser.Scene {
       user: name,
       score,
     };
-    const leaderboardRequest = fetch(url, {
+    fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -57,11 +57,11 @@ export default class GameOverScene extends Phaser.Scene {
       textWidth = 406;
     }
     const text = this.add.text(this.sys.game.config.width / 2 - textWidth / 2, 100, gameOverMessage, { color: 'white', fontSize: '45px' });
-    const score = this.add.text(this.sys.game.config.width / 2 - 307 / 2, text.displayHeight + 110, `Your score was: ${data.score}`, { color: 'white', fontSize: '30px' });
+    this.add.text(this.sys.game.config.width / 2 - 307 / 2, text.displayHeight + 110, `Your score was: ${data.score}`, { color: 'white', fontSize: '30px' });
 
     const element = this.add.dom(400, 0).createFromCache('nameform');
     element.addListener('click');
-    element.on('click', function (event) {
+    element.on('click', (event) => {
       if (event.target.name === 'submitButton') {
         const inputText = element.node.firstChild;
 

@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 import '../dist/assets/style/main.css';
 
 

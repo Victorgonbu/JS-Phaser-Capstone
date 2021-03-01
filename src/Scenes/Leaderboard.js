@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 import Button from '../Objects/Button';
 
 export default class Leaderboard extends Phaser.Scene {
@@ -10,6 +10,10 @@ export default class Leaderboard extends Phaser.Scene {
     const { url } = this.sys.game.globals.model.gameOptions;
     return fetch(url, {
       method: 'GET',
+    }).then((response) => {
+      response.json();
+    }).then((response) => {
+      response.result.sort((a, b) => b.score - a.score);
     });
   }
 
@@ -17,10 +21,6 @@ export default class Leaderboard extends Phaser.Scene {
     if (i > 10) return;
     this.add.bitmapText(this.sys.game.config.width - 700, verticalSpace, 'gamma', `${i}. ${user.user.toUpperCase()}`);
     this.add.bitmapText(this.sys.game.config.width - 150, verticalSpace, 'gamma', `${user.score}`);
-  }
-
-  processRequest(request) {
-    return request.then((response) => response.json()).then((response) => response.result.sort((a, b) => b.score - a.score)).then((response) => response);
   }
 
   createScoreList(list) {
@@ -41,8 +41,7 @@ export default class Leaderboard extends Phaser.Scene {
     this.score = this.add.bitmapText(this.sys.game.config.width - 150, 50, 'gamma', 'SCORE');
 
     const scoresRequest = this.requestScores();
-    const scoreList = this.processRequest(scoresRequest);
-    scoreList.then((list) => {
+    scoresRequest.then((list) => {
       this.createScoreList(list);
     });
 
