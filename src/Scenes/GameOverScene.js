@@ -29,8 +29,8 @@ export default class GameOverScene extends Phaser.Scene {
     });
   }
 
-  setScoreInLeaderboard(name, score) {
-    const { url } = this.sys.game.globals.model.gameOptions;
+  setScoreInLeaderboard(name, score, model) {
+    const { url } = model;
 
     const requestParameters = {
       user: name,
@@ -69,7 +69,7 @@ export default class GameOverScene extends Phaser.Scene {
           element.removeListener('click');
           element.visible = false;
           this.moveButtons();
-          this.setScoreInLeaderboard(inputText.value, data.score);
+          this.setScoreInLeaderboard(inputText.value, data.score, this.sys.game.globals.model.gameOptions());
         }
       }
     }, this);
