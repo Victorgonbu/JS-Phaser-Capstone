@@ -1,3 +1,5 @@
+/* eslint class-methods-use-this: ["error",
+{ "exceptMethods": ["scoreUp", "shootBullet", "playerProperties"] }] */
 import Phaser from 'phaser';
 import BulletGroup from '../Objects/bulletGroup';
 
@@ -79,7 +81,7 @@ export default class GameScene extends Phaser.Scene {
     // score
     this.score = 0;
     // model for game options
-    
+
     this.model = this.sys.game.globals.model.gameOptions();
     this.sys.game.globals.bgMusic.stop();
 
@@ -129,7 +131,7 @@ export default class GameScene extends Phaser.Scene {
     this.shotKeyObject = this.input.keyboard.addKey('SPACE');
 
     // bullets
-    
+
     this.bulletGroup = new BulletGroup(this);
     this.addShotEvent();
 
@@ -166,7 +168,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   scoreUp(score) {
-    return score += 10;
+    return score + 10;
   }
 
   addShotEvent() {
@@ -338,7 +340,6 @@ export default class GameScene extends Phaser.Scene {
             this.killZombie(zombie);
             this.score = this.scoreUp(this.score);
             this.scoreText.setText(`Score: ${this.score}`);
-
           });
         } else if (Math.abs(this.player.x - zombie.x) < 300 && !zombie.dead && !zombie.hurt) {
           const zombieSprintVelocity = 100;

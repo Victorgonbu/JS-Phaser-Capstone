@@ -1,3 +1,4 @@
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["setScoreInLeaderboard"] }] */
 import Phaser from 'phaser';
 import Button from '../Objects/Button';
 
@@ -69,7 +70,8 @@ export default class GameOverScene extends Phaser.Scene {
           element.removeListener('click');
           element.visible = false;
           this.moveButtons();
-          this.setScoreInLeaderboard(inputText.value, data.score, this.sys.game.globals.model.gameOptions());
+          this.setScoreInLeaderboard(inputText.value, data.score,
+            this.sys.game.globals.model.gameOptions());
         }
       }
     }, this);

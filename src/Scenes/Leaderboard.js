@@ -1,3 +1,4 @@
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["requestScores"] }] */
 import Phaser from 'phaser';
 import Button from '../Objects/Button';
 
@@ -7,12 +8,12 @@ export default class Leaderboard extends Phaser.Scene {
   }
 
   requestScores(gameOptions, fetchRequest) {
-    const url  = gameOptions.url;
-    
+    const { url } = gameOptions;
+
     return fetchRequest(url, {
       method: 'GET',
-      
-    })
+
+    });
   }
 
   displayScore(user, verticalSpace, i) {
@@ -39,16 +40,10 @@ export default class Leaderboard extends Phaser.Scene {
     this.score = this.add.bitmapText(this.sys.game.config.width - 150, 50, 'gamma', 'SCORE');
 
     const scoresRequest = this.requestScores(this.sys.game.globals.model.gameOptions(), fetch)
-    .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      return response.result.sort((a, b) => {
-        return b.score - a.score
-      });
-    });
+      .then((response) => response.json())
+      .then((response) => response.result.sort((a, b) => b.score - a.score));
 
-    
+
     scoresRequest.then((list) => {
       this.createScoreList(list);
     });

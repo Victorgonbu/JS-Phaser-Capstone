@@ -437,7 +437,6 @@ export default class PreloaderScene extends Phaser.Scene {
       frameRate: 40,
       repeat: 0,
     });
-
   }
 
   ready() {

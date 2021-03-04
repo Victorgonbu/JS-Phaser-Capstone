@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 class Bullet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'bullet');
+    this.velocity = 2800;
   }
 
   preUpdate(time, delta) {
@@ -13,23 +14,22 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  getBulletVelocity(facing) {
-    let bulletVelocity = 2800;
+  BulletVelocity(facing) {
+    let bulletVelocity = this.velocity;
     if (facing === 'left') {
       bulletVelocity *= -1;
     }
-    return bulletVelocity  ;
+    return bulletVelocity;
   }
 
   fire(x, y, facing) {
-    
     this.body.reset(x, y);
     this.setScale(0.2);
     this.setActive(true);
 
     this.setVisible(true);
 
-    let bulletVelocity = this.getBulletVelocity(facing);
+    const bulletVelocity = this.BulletVelocity(facing);
 
     this.setVelocityX(bulletVelocity);
   }
