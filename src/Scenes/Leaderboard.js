@@ -6,15 +6,13 @@ export default class Leaderboard extends Phaser.Scene {
     super('Leaderboard');
   }
 
-  requestScores() {
-    const { url } = this.sys.game.globals.model.gameOptions;
-    return fetch(url, {
+  requestScores(gameOptions, fetchRequest) {
+    const url  = gameOptions.url;
+    
+    return fetchRequest(url, {
       method: 'GET',
-    }).then((response) => {
-      response.json();
-    }).then((response) => {
-      response.result.sort((a, b) => b.score - a.score);
-    });
+      
+    })
   }
 
   displayScore(user, verticalSpace, i) {
@@ -40,7 +38,17 @@ export default class Leaderboard extends Phaser.Scene {
     this.username = this.add.bitmapText(this.sys.game.config.width - 700, 50, 'gamma', 'USERNAME');
     this.score = this.add.bitmapText(this.sys.game.config.width - 150, 50, 'gamma', 'SCORE');
 
-    const scoresRequest = this.requestScores();
+    const scoresRequest = this.requestScores(this.sys.game.globals.model.gameOptions(), fetch)
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      return response.result.sort((a, b) => {
+        return b.score - a.score
+      });
+    });
+
+    
     scoresRequest.then((list) => {
       this.createScoreList(list);
     });

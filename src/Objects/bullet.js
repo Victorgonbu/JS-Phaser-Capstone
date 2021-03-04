@@ -13,17 +13,23 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  fire(x, y, facing) {
+  getBulletVelocity(facing) {
     let bulletVelocity = 2800;
+    if (facing === 'left') {
+      bulletVelocity *= -1;
+    }
+    return bulletVelocity  ;
+  }
+
+  fire(x, y, facing) {
+    
     this.body.reset(x, y);
     this.setScale(0.2);
     this.setActive(true);
 
     this.setVisible(true);
 
-    if (facing === 'left') {
-      bulletVelocity *= -1;
-    }
+    let bulletVelocity = this.getBulletVelocity(facing);
 
     this.setVelocityX(bulletVelocity);
   }

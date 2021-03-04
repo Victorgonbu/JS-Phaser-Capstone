@@ -123,10 +123,6 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.tilemapTiledJSON('backgroundTilemap', 'assets/BackgroundTile.json');
 
-    this.load.spritesheet('coin', 'assets/coin.png', {
-      frameWidth: 20,
-      frameHeight: 20,
-    });
     // player gun mode
     // idle
     this.load.image('idle_gun_0', 'assets/Soldier-Guy-PNG/_Mode-Gun/01-Idle/E_E_Gun__Idle_000.png');
@@ -442,20 +438,6 @@ export default class PreloaderScene extends Phaser.Scene {
       repeat: 0,
     });
 
-
-    // coin animation
-    this.anims.create({
-      key: 'rotate',
-      frames: this.anims.generateFrameNumbers('coin', {
-        start: 0,
-        end: 5,
-      }),
-      frameRate: 15,
-      yoyo: true,
-      repeat: -1,
-    });
-
-    // fire animation
   }
 
   ready() {

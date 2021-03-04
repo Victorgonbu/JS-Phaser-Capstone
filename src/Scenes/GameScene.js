@@ -79,7 +79,8 @@ export default class GameScene extends Phaser.Scene {
     // score
     this.score = 0;
     // model for game options
-    this.model = this.sys.game.globals.model.gameOptions;
+    
+    this.model = this.sys.game.globals.model.gameOptions();
     this.sys.game.globals.bgMusic.stop();
 
 
@@ -128,7 +129,7 @@ export default class GameScene extends Phaser.Scene {
     this.shotKeyObject = this.input.keyboard.addKey('SPACE');
 
     // bullets
-
+    
     this.bulletGroup = new BulletGroup(this);
     this.addShotEvent();
 
@@ -164,36 +165,35 @@ export default class GameScene extends Phaser.Scene {
     this.myCam.startFollow(this.player);
   }
 
-  scoreUp() {
-    this.score += 10;
-    this.scoreText.setText(`Score: ${this.score}`);
+  scoreUp(score) {
+    return score += 10;
   }
 
   addShotEvent() {
     this.input.keyboard.on('keydown-SPACE', () => {
-      this.shootBullet();
+      this.shootBullet(this.isWaking, this.facing, this.bulletGroup, this.player, this.gunShot);
     }, this);
   }
 
-  shootBullet() {
-    if (!this.isWaking) {
-      this.gunShot.play();
-      if (this.facing === 'right') {
-        this.bulletGroup.fireBullet(this.player.x + 5, this.player.y + 10, 'right');
+  shootBullet(walking, facing, bulletGroup, player, gunShot) {
+    if (!walking) {
+      gunShot.play();
+      if (facing === 'right') {
+        bulletGroup.fireBullet(player.x + 5, player.y + 10, 'right');
       } else {
-        this.bulletGroup.fireBullet(this.player.x - 5, this.player.y + 10, 'left');
+        bulletGroup.fireBullet(player.x - 5, player.y + 10, 'left');
       }
     }
   }
 
   setEnemyScaleAndVelocity(zombieVelocity, zombie) {
     if (this.player.x > zombie.x) {
-      if (zombie.dead === false) {
+      if (!zombie.dead) {
         zombie.setOffset(0, 0);
         zombie.scaleX = 0.23;
         zombie.setVelocityX(zombieVelocity);
       }
-    } else if (zombie.dead === false) {
+    } else if (!zombie.dead) {
       zombie.setOffset(222, 0);
       zombie.scaleX = -0.23;
       zombie.setVelocityX(zombieVelocity * -1);
@@ -210,17 +210,17 @@ export default class GameScene extends Phaser.Scene {
     this.scrollMultiply = 0.1;
   }
 
-  playerProperties(side) {
-    let velocity = this.model.playerVelocity;
-    let scale = this.model.playerScale;
+  playerProperties(side, model) {
+    let velocity = model.playerVelocity;
+    let scale = model.playerScale;
     let offsetX;
 
     if (side === 'left') {
       velocity *= -1;
       scale *= -1;
-      offsetX = this.model.leftPlayerOffset;
+      offsetX = model.leftPlayerOffset;
     } else {
-      offsetX = this.model.rightPlayerOffset;
+      offsetX = model.rightPlayerOffset;
     }
     return {
       velocity,
@@ -242,7 +242,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   playerMove(side) {
-    const playerSideProperties = this.playerProperties(side);
+    const playerSideProperties = this.playerProperties(side, this.model);
     this.isWaking = true;
     this.facing = side;
     this.player.setVelocityX(playerSideProperties.velocity);
@@ -336,7 +336,9 @@ export default class GameScene extends Phaser.Scene {
           zombie.setVelocityX(0);
           zombie.on('animationcomplete', () => {
             this.killZombie(zombie);
-            this.scoreUp();
+            this.score = this.scoreUp(this.score);
+            this.scoreText.setText(`Score: ${this.score}`);
+
           });
         } else if (Math.abs(this.player.x - zombie.x) < 300 && !zombie.dead && !zombie.hurt) {
           const zombieSprintVelocity = 100;

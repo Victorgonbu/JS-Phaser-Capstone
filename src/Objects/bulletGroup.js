@@ -3,6 +3,7 @@ import Bullet from './bullet';
 
 class BulletGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
+    console.log(scene.physics.world);
     super(scene.physics.world, scene);
 
     this.createMultiple({
