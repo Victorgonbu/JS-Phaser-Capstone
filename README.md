@@ -43,7 +43,7 @@ Make a way through the zombies and survive.
 ### How to play
 
 - To move Marlos you should use the 'left' and 'right' arrow keys on your keyboard.
-- Jump by pressing the 'up' arrow on your keyboard.
+- Jump by pressing the 'up' arrow on your keyboard and double jump by pressing the same key while on the air.
 - Shot by pressing the 'SPACE' key on your keyboard.
 - Kill as many zombies as you can to increase your score.
 - Avoid all the zombies to keep Marlos alive.
