@@ -16,11 +16,32 @@
     "@babel/preset-env": "^7.12.13",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
+    "eslint": "6.8.x",
+    "eslint-config-airbnb-base": "14.1.x",
+    "eslint-plugin-import": "2.20.x",
     "html-webpack-plugin": "^5.0.0",
     "jest": "^26.6.3",
+    "jest-canvas-mock": "^2.3.1",
+    "raw-loader": "^4.0.2",
     "style-loader": "^2.0.0",
+    "stylelint": "13.3.x",
+    "stylelint-config-standard": "20.0.x",
+    "stylelint-csstree-validator": "^1.9.0",
+    "stylelint-scss": "3.17.x",
     "webpack": "^5.20.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "import": "^0.0.6",
+    "node-fetch": "^2.6.1",
+    "phaser": "^3.52.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock",
+      "<rootDir>/jest.setup.js"
+    ]
   }
 }
