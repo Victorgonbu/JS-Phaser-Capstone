@@ -62,7 +62,7 @@ Make a way through the zombies and survive.
 
 ## Demo
 
-[Live Demo](https://zombieraid.netlify.app)
+[Live Demo](https://zombie-raid-game.netlify.app)
 
 ## Game Development Stages
 
